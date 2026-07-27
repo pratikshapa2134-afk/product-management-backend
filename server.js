@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
-mongoose.connect("mongodb+srv://pratikshapa2134_db_user:pratiksha123@cluster0.0a4ijbm.mongodb.net/productDB?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Atlas Connected Successfully'))
   .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
