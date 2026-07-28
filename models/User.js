@@ -6,12 +6,12 @@ const jwt = require('jsonwebtoken');
 // Register Route
 router.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        
+        const { email, password } = req.body;
+
         // Check if user already exists
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "Username already exists!" });
+            return res.status(400).json({ message: "User already exists!" });
         }
 
         // Hash password
@@ -19,9 +19,9 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Save new user
-        const newUser = new User({ username, password: hashedPassword });
+        const newUser = new User({ email, password: hashedPassword });
         await newUser.save();
-        
+
         res.status(201).json({ message: "User registered successfully!" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -31,15 +31,15 @@ router.post('/register', async (req, res) => {
 // Login Route
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username });
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: "User not found!" });
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials!" });
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '1d' });
-        res.json({ token, username: user.username });
+        res.json({ token, email: user.email });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
