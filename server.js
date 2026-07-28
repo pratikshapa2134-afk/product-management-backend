@@ -7,9 +7,9 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+  origin: "https://product-management-frontend-xxxx.vercel.app](https://product-management-frontend-xxxx.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 
 app.use(express.json());
