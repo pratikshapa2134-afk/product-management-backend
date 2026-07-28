@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "*", // Sagle origins allow karel tyamule CORS cha error khedi yenar nahi
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -19,13 +19,13 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log('MongoDB Connected Successfully'))
-  .catch((err) => console.log('MongoDB Connection Error: ', err));
+.then(() => console.log('MongoDB Connected Successfully'))
+.catch((err) => console.log('MongoDB Connection Error: ', err));
 
-// Routes Import (Tumchya file structure nusar route check kara)
-
-const authRoutes = require('./routes/auth'); // (tichi file kuthlya folder madhe ahe tyapramane path dya, jaise ki ./routes/auth.js kinwa ./routes/authRoutes.js)
+// Routes Import
+const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+
 app.get('/', (req, res) => {
     res.send('API is running successfully...');
 });
