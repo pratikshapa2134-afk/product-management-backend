@@ -7,33 +7,30 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "https://product-management-frontend-xxxx.vercel.app](https://product-management-frontend-xxxx.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+    origin: "*", // Sagle origins allow karel tyamule CORS cha error khedi yenar nahi
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }));
 
 app.use(express.json());
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI)
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully'))
   .catch((err) => console.log('MongoDB Connection Error: ', err));
 
-// Routes
-const productRoutes = require('./routes/productRoutes');
-app.use('/api/products', productRoutes);
+// Routes Import (Tumchya file structure nusar route check kara)
+// Udaharanarth jar auth routes astil tar:
+// const authRoutes = require('./routes/authRoutes');
+// app.use('/api/auth', authRoutes);
 
-// Tumchya auth file chya folder structure pramane yethle path check karun gya 
-// (Jar auth file routes folder madhech auth.js navane asel, tar './routes/auth' vapra)
-const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
-
-// Root Route for Health Check
 app.get('/', (req, res) => {
-    res.send('MERN Backend is Running Live!');
+    res.send('API is running successfully...');
 });
 
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
