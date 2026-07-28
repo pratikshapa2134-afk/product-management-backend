@@ -23,10 +23,9 @@ mongoose.connect(MONGO_URI)
   .catch((err) => console.log('MongoDB Connection Error: ', err));
 
 // Routes Import (Tumchya file structure nusar route check kara)
-// Udaharanarth jar auth routes astil tar:
-// const authRoutes = require('./routes/authRoutes');
-// app.use('/api/auth', authRoutes);
 
+const authRoutes = require('./routes/auth'); // (tichi file kuthlya folder madhe ahe tyapramane path dya, jaise ki ./routes/auth.js kinwa ./routes/authRoutes.js)
+app.use('/api/auth', authRoutes);
 app.get('/', (req, res) => {
     res.send('API is running successfully...');
 });
